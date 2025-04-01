@@ -33,16 +33,12 @@ export function Login() {
         setMessage(data.message);
 
         if (data.success) {
-            // When a user logs out:
-            //localStorage.removeItem('authToken'); // Remove the token on logout
-
-            // Store token and username in localStorage
             localStorage.setItem('authToken', data.token); // Store the token
-            localStorage.setItem('username', data.username); // Store the username
+            localStorage.setItem('username', data.user.username);
+            localStorage.setItem('userID', data.user.id);
 
-                        // If login is successful, redirect to the /home page
-                        navigate('/'); // This will redirect to the "Home" page
-
+            // If login is successful, redirect to the /home page
+            navigate(`/`); // This will redirect to the "Home" page
         }
     };
 
@@ -111,7 +107,6 @@ const StyledLoginBox = styled.div`
         border-radius: 15px;
         width: 100%;
         font-size: 1rem;
-        text-align: center;
         background: #FFFFFF21;
         border: 1px solid #FFF;
         color: #fff;

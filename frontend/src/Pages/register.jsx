@@ -118,7 +118,6 @@ const StyledRegisterBox = styled.div `
         border-radius: 15px;
         width: 100%;
         font-size: 1rem;
-        text-align: center;
         background: #FFFFFF21;
         border: 1px solid #FFF;
         color: #fff;

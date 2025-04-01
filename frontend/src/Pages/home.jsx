@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../component/footer';
 
 export default function Home() {
     const navigate = useNavigate();
@@ -27,6 +28,7 @@ export default function Home() {
         <div>
             <h1>Welcome to the Home Page {username}</h1>
             <button onClick={logout}>Log out</button>
+            <Footer />
         </div>
     );
 }
