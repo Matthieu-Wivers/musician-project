@@ -1,49 +1,29 @@
-import { useEffect, useState } from "react";
-import UserBox from "../component/UserBox";
-import styled from "styled-components";
-import Footer from "../component/footer";
+// home.jsx
+import React, { useState, useEffect } from "react";
+import { UserBox } from "../component/UserBox";
+import Footer from '../component/footer';
 
-export function Home() {
+const Home = () => {
     const [users, setUsers] = useState([]);
-    const [error, setError] = useState(null);
+    const currentUserId = 1; // ID de l'utilisateur connecté, tu peux le récupérer de manière dynamique
 
     useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const response = await fetch("http://localhost/musician-api/get_users.php");
-                const data = await response.json();
-
-                if (data.success) {
-                    setUsers(data.users);
-                } else {
-                    setError("Impossible de charger les utilisateurs.");
-                }
-            } catch (error) {
-                setError("Erreur lors du chargement.");
-            }
-        };
-
-        fetchUsers();
+        fetch("http://localhost/musician-api/get_users.php")
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) setUsers(data.users);
+            })
+            .catch(err => console.error("Erreur:", err));
     }, []);
 
-    if (error) return <p>{error}</p>;
-    if (users.length === 0) return <p>Chargement des utilisateurs...</p>;
-
     return (
-        <StyledContainer>
-            <h1>Liste des musiciens</h1>
+        <div>
             {users.map(user => (
-                <UserBox key={user.id} user={user} />
+                <UserBox key={user.id} user={user} currentUserId={currentUserId} />
             ))}
             <Footer />
-        </StyledContainer>
+        </div>
     );
-}
+};
 
-const StyledContainer = styled.div`
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-`;
-
-export default Home;
+export default Home;  // Vérifie que tu exportes ton composant par défaut

@@ -9,6 +9,7 @@ const Footer = () => {
         <StyledFooter>
             <Link to={`/profile/${userID}`}>Futur profile  </Link>
             <Link to="/">  Futur home</Link>
+            <Link to={`/conversations`}>  Futur messages</Link>
         </StyledFooter>
     );
 };
