@@ -1,34 +1,49 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Footer from '../component/footer';
+import { useEffect, useState } from "react";
+import UserBox from "../component/UserBox";
+import styled from "styled-components";
+import Footer from "../component/footer";
 
-export default function Home() {
-    const navigate = useNavigate();
-    const [username, setUsername] = useState('');
+export function Home() {
+    const [users, setUsers] = useState([]);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        // Check if the user is authenticated (example: check localStorage for a token)
-        const isAuthenticated = localStorage.getItem('authToken'); // Adjust this based on your auth logic
-        const storedUsername = localStorage.getItem('username');
+        const fetchUsers = async () => {
+            try {
+                const response = await fetch("http://localhost/musician-api/get_users.php");
+                const data = await response.json();
 
-        if (!isAuthenticated) {
-        // If not authenticated, redirect to the login page
-            navigate('/login');
-        } else {
-            setUsername(storedUsername);
-        }
-    }, [navigate]); // Only rerun when the navigate function changes
+                if (data.success) {
+                    setUsers(data.users);
+                } else {
+                    setError("Impossible de charger les utilisateurs.");
+                }
+            } catch (error) {
+                setError("Erreur lors du chargement.");
+            }
+        };
 
-    function logout() {
-        localStorage.clear();
-        location.reload();
-    }
+        fetchUsers();
+    }, []);
+
+    if (error) return <p>{error}</p>;
+    if (users.length === 0) return <p>Chargement des utilisateurs...</p>;
 
     return (
-        <div>
-            <h1>Welcome to the Home Page {username}</h1>
-            <button onClick={logout}>Log out</button>
+        <StyledContainer>
+            <h1>Liste des musiciens</h1>
+            {users.map(user => (
+                <UserBox key={user.id} user={user} />
+            ))}
             <Footer />
-        </div>
+        </StyledContainer>
     );
 }
+
+const StyledContainer = styled.div`
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+`;
+
+export default Home;
