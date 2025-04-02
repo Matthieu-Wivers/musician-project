@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styled from "styled-components";
 
 export function CreateConversation({ otherUserId }) {
     const [error, setError] = useState(null);
@@ -31,10 +32,23 @@ export function CreateConversation({ otherUserId }) {
     };
 
     return (
-        <div>
+        <StyledCreateConv>
             <button onClick={createConversation}>Démarrer une conversation</button>
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            {success && <p style={{ color: 'green' }}>{success}</p>}
-        </div>
+            {success && <p style={{ color: '#50C878' }}>{success}</p>}
+        </StyledCreateConv>
     );
 }
+
+const StyledCreateConv = styled.div`
+    margin: auto;
+    margin-bottom: 10px;
+
+    button {
+        background-color: #1c3d5a;
+    }
+
+    p {
+        text-align: center;
+    }
+`;

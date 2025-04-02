@@ -19,9 +19,12 @@ const Home = () => {
 
     return (
         <StyledHomePage>
-            {users.map(user => (
-                <UserBox key={user.id} user={user} currentUserId={currentUserId} />
-            ))}
+            <h1>NOTABENE</h1>
+            <div className="boxUsers">
+                {users.map(user => (
+                    <UserBox key={user.id} user={user} currentUserId={currentUserId} />
+                ))}
+            </div>
             <Footer />
         </StyledHomePage>
     );
@@ -33,5 +36,13 @@ const StyledHomePage = styled.div`
     background: linear-gradient(140deg, #5DADEC, #2179B5);
     min-height: 100dvh;
     width: 100vw;
-    overflow: hidden;
+    overflow: scroll;
+
+    h1 {
+        text-align: center;
+    }
+
+    .boxUsers {
+        margin-bottom: 70px;
+    }
 `;

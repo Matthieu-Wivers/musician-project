@@ -11,9 +11,14 @@ export function UserBox({ user, currentUserId }) {
 
     return (
         <StyledUserBox className="user-box" onClick={handleClick}>
-            <img src={user.profile_picture || "/default-avatar.png"} alt="Profile"/>
-            <h2>{user.first_name} {user.last_name}</h2>
-            <p><strong>Catégorie:</strong> {user.category || "Non renseignée"}</p>
+            <div className="insideCard">
+                <img src={user.profile_picture || "/default-avatar.png"} alt="Profile"/>
+                <div>
+                    <h2>{user.first_name} {user.last_name}</h2>
+                    <p><strong>Catégories</strong></p>
+                </div>
+            </div>
+            <p className="categories">{user.category || "Non renseignée"}</p>
             {showButton && (
                 <CreateConversation userId={currentUserId} otherUserId={user.id} />
             )}
@@ -22,11 +27,35 @@ export function UserBox({ user, currentUserId }) {
 }
 
 const StyledUserBox = styled.div`
-display: flex;
+    display: flex;
+    flex-direction: column;
+    background-color: #2179B5;
+    margin: 10px;
+    border-radius: 15px;
 
-img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-}
+    .insideCard {
+        display: flex;
+        flex-direction: row;
+    }
+
+    img {
+        width: 57px;
+        height: 57px;
+        padding: 10px;
+        border-radius: 50%;
+    }
+
+    h2 {
+        font-size: 20px;
+        margin: 0;
+        margin-top: 10px;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    .categories {
+        padding: 0 10px 10px 10px;
+    }
 `;
