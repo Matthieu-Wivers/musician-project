@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-export function Chat({ userId }) {
+export function Chat() {
     const { conversationId } = useParams();
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
+
+    // Récupérer l'ID utilisateur depuis le localStorage
+    const userId = localStorage.getItem("userID");
 
     useEffect(() => {
         fetch(`http://localhost/musician-api/get_messages.php?conversation_id=${conversationId}`)
             .then(res => res.json())
             .then(data => {
                 if (data.success) setMessages(data.messages);
-            })
-            .catch(err => console.error("Erreur:", err));
+            });
     }, [conversationId]);
 
     const sendMessage = () => {
@@ -24,20 +26,36 @@ export function Chat({ userId }) {
                 content: newMessage,
             }),
             headers: { "Content-Type": "application/json" },
-        }).then(() => {
-            setMessages([...messages, { sender_id: userId, content: newMessage }]);
-            setNewMessage("");
+        }).then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                setMessages([...messages, { sender_id: userId, content: newMessage }]);
+                setNewMessage("");
+            }
         });
     };
 
     return (
-        <div>
+        <div className="chat-container">
             <h2>Chat</h2>
-            <div>
-                {messages.map((msg, i) => <p key={i}>{msg.content}</p>)}
+            <div className="messages-container">
+                {messages.map((msg, i) => (
+                    <p 
+                        key={i} 
+                        className={msg.sender_id == userId ? "message sent" : "message received"}
+                    >
+                        {msg.content}
+                    </p>
+                ))}
             </div>
-            <input value={newMessage} onChange={e => setNewMessage(e.target.value)} />
-            <button onClick={sendMessage}>Envoyer</button>
+            <div className="input-container">
+                <input 
+                    value={newMessage} 
+                    onChange={e => setNewMessage(e.target.value)} 
+                    placeholder="Tapez votre message..."
+                />
+                <button onClick={sendMessage}>Envoyer</button>
+            </div>
         </div>
     );
 }

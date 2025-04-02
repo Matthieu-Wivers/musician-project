@@ -16,8 +16,8 @@ function App() {
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/profile/:id" element={<Profile/>}></Route>
-                <Route path="/conversations" element={<ConversationsList/>} />
-                <Route path="/conversation/chat" element={<Chat/>}></Route>
+                <Route path="/conversations" element={<ConversationsList/>}></Route>
+                <Route path="chat/:conversationId" element={<Chat />} />
             </Routes>
         </Router>
     );
