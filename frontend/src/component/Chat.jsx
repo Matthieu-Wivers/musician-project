@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 export function Chat() {
     const { conversationId } = useParams();
@@ -36,7 +38,8 @@ export function Chat() {
     };
 
     return (
-        <div className="chat-container">
+        <StyledChat className="chat-container">
+            <Link to="/conversations">⬅</Link>
             <h2>Chat</h2>
             <div className="messages-container">
                 {messages.map((msg, i) => (
@@ -56,6 +59,13 @@ export function Chat() {
                 />
                 <button onClick={sendMessage}>Envoyer</button>
             </div>
-        </div>
+        </StyledChat>
     );
 }
+
+const StyledChat = styled.div`
+    background: linear-gradient(140deg, #5DADEC, #2179B5);
+    min-height: 100dvh;
+    width: 100vw;
+    overflow: hidden;
+`;

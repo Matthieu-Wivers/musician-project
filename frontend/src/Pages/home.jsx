@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { UserBox } from "../component/UserBox";
 import Footer from '../component/footer';
+import styled from "styled-components";
 
 const Home = () => {
     const [users, setUsers] = useState([]);
@@ -17,13 +18,20 @@ const Home = () => {
     }, []);
 
     return (
-        <div>
+        <StyledHomePage>
             {users.map(user => (
                 <UserBox key={user.id} user={user} currentUserId={currentUserId} />
             ))}
             <Footer />
-        </div>
+        </StyledHomePage>
     );
 };
 
 export default Home;  // Vérifie que tu exportes ton composant par défaut
+
+const StyledHomePage = styled.div`
+    background: linear-gradient(140deg, #5DADEC, #2179B5);
+    min-height: 100dvh;
+    width: 100vw;
+    overflow: hidden;
+`;

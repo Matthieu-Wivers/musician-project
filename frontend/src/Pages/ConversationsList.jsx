@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../component/footer";
+import styled from "styled-components";
 
 export function ConversationsList() {
     const [conversations, setConversations] = useState([]);
@@ -32,7 +33,7 @@ export function ConversationsList() {
     }, []);
 
     return (
-        <div>
+        <StyledConv>
             <h2>Conversations</h2>
             {conversations.length === 0 ? (
                 <p>Aucune conversation disponible.</p>
@@ -40,13 +41,24 @@ export function ConversationsList() {
                 conversations.map(conv => (
                     <Link key={conv.id} to={`/chat/${conv.id}`}>
                         <div className="conversation-box">
-                            <img src={conv.profile_picture || "/default.jpg"} alt="Profile" width="50" />
+                            <img src={conv.profile_picture || "/default.jpg"} className="profilePicture" alt="Profile" width="50" />
                             <p>{conv.username}</p>
                         </div>
                     </Link>
                 ))
             )}
             <Footer />
-        </div>
+        </StyledConv>
     );
 }
+
+const StyledConv = styled.div`
+    background: linear-gradient(140deg, #5DADEC, #2179B5);
+    min-height: 100dvh;
+    width: 100vw;
+    overflow: hidden;
+
+    .profilePicture {
+        border-radius: 50%;
+    }
+`;

@@ -122,7 +122,7 @@ export function Profile() {
 
     return (
         <StyledProfile>
-            <img src={profile.profile_picture || "/default-avatar.png"} alt="Profile" width="150" />
+            <img src={profile.profile_picture || "/default-avatar.png"} className="profilePicture" alt="Profile" width="150" />
             <h1>{profile.first_name || profile.username} {profile.last_name}</h1>
 
             {/* Mode lecture */}
@@ -194,9 +194,13 @@ export function Profile() {
     );
 }
 
-const StyledProfile = styled.div` 
-margin-left: 10px;   
-    img {
+const StyledProfile = styled.div`
+    background: linear-gradient(140deg, #5DADEC, #2179B5);
+    min-height: 100dvh;
+    width: 100vw;
+    overflow: hidden;
+
+    .profilePicture {
         border-radius: 50%;
     }
     button {
