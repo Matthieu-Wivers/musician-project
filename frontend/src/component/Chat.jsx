@@ -68,4 +68,8 @@ const StyledChat = styled.div`
     min-height: 100dvh;
     width: 100vw;
     overflow: hidden;
+
+    .sent {
+        text-align: right;
+    }
 `;

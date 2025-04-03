@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 export function Register() {
@@ -8,6 +8,8 @@ export function Register() {
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
     const [message, setMessage] = useState('');
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,7 +37,6 @@ export function Register() {
         setMessage(data.message);
 
         if (data.success) {
-            // If the registration is successful, you can redirect the user or do something else
             navigate('/login');
         }
     };
