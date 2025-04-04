@@ -34,7 +34,6 @@ export function ConversationsList({user}) {
 
     const navigate = useNavigate();
 
-    // Vérifier l'authentification uniquement une fois, pas dans les hooks
     useEffect(() => {
         const isAuthenticated = localStorage.getItem('authToken'); // Adjust this based on your auth logic
         if (!isAuthenticated) {

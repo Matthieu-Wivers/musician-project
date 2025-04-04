@@ -42,6 +42,15 @@ export function Login() {
         }
     };
 
+    useEffect(() => {
+        fetch("http://localhost/musician-api/get_users.php")
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) setUsers(data.users);
+            })
+            .catch(err => console.error("Erreur:", err));
+    }, []);
+
     return (
         <StyledLoginBox>
             <h1>NOTABENE</h1>
