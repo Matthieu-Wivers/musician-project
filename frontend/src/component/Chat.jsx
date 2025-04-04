@@ -43,12 +43,14 @@ export function Chat() {
             <h2>Chat</h2>
             <div className="messages-container">
                 {messages.map((msg, i) => (
-                    <p 
-                        key={i} 
-                        className={msg.sender_id == userId ? "message sent" : "message received"}
+                    <div
+                    key={i} 
+                    className={msg.sender_id == userId ? "message sent" : "message received"}
                     >
+                    <p>
                         {msg.content}
                     </p>
+                    </div>
                 ))}
             </div>
             <div className="input-container">
@@ -69,7 +71,54 @@ const StyledChat = styled.div`
     width: 100vw;
     overflow: hidden;
 
+    a {
+        color: white;
+        font-size: 40px;
+    }
+
+    .input-container {
+        position: fixed;
+        bottom: 40px;
+        display: flex;
+        width: 100%;
+
+        &>input {
+            width: 90%;
+            background: #A0D8FF;
+            outline: none;
+            border: none;
+            padding: 10px 0;
+            border-radius: 20px;
+            margin: auto;
+        }
+    }
+
+    .received {
+        display: flex;
+        margin-bottom: 5px;
+
+        &>p {
+            background-color: #5DADEC;
+            border-radius: 0 20px 20px 0;
+        }
+    }
+
     .sent {
-        text-align: right;
+        display: flex;
+        margin-bottom: 5px;
+
+        &>p {
+            margin-left: auto;
+            background-color: #2179B5;
+            border-radius: 20px 0 0 20px;
+        }
+    }
+
+    p {
+        margin: 0;
+        padding: 5px 10px;
+        max-width: 80%;
+        font-size: 15px;
+        font-weight: bolder;
     }
 `;

@@ -1,9 +1,12 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { Link, useNavigate } from 'react-router-dom'
 
 export function CreateConversation({ otherUserId }) {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
+
+    const navigate = useNavigate();
 
     const createConversation = async () => {
         // Récupère l'ID utilisateur depuis le localStorage
@@ -25,6 +28,8 @@ export function CreateConversation({ otherUserId }) {
         if (data.success) {
             setSuccess("Conversation créée avec succès !");
             setError(null);
+
+            navigate(`/conversations`);
         } else {
             setError(data.message);
             setSuccess(null);

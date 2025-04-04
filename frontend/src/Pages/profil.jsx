@@ -15,7 +15,7 @@ export function Profile() {
         email: "",
         password: "",
         bio: "",
-        profile_picture: null, // Fichier image
+        profile_picture: null, 
     });
 
     const navigate = useNavigate(); // Déclare `navigate` ici pour éviter de l'utiliser après des hooks
@@ -48,7 +48,7 @@ export function Profile() {
                         email: data.profile.email || "",
                         password: data.profile.password || "",
                         bio: data.profile.bio || "",
-                        profile_picture: null, // Par défaut, pas de changement d'image
+                        profile_picture: null,
                     });
                 } else {
                     setError(data.message);
@@ -88,23 +88,32 @@ export function Profile() {
             formDataToSend.append("profile_picture", formData.profile_picture);
         }
     
-        try {
-            const response = await fetch("http://localhost/musician-api/update_profile.php", {
-                method: "POST",
-                body: formDataToSend,  // Envoi de données avec FormData
-            });
-    
-            const data = await response.json();
-            if (data.success) {
-                setEditMode(false);
-                setProfile({ ...profile, ...formData, profile_picture: data.profile_picture || profile.profile_picture });
-            } else {
-                setError(data.message);  // Affichage du message d'erreur
-            }
-        } catch (error) {
-            console.error("Erreur lors de la mise à jour :", error);
-            setError("Impossible de mettre à jour le profil.");
+try {
+    const response = await fetch("http://localhost/musician-api/update_profile.php", {
+        method: "POST",
+        body: formDataToSend,
+    });
+
+    const text = await response.text(); // Lire la réponse brute
+    console.log("Réponse serveur brute :", text);
+
+    try {
+        const data = JSON.parse(text); // Essayer de parser en JSON
+        if (data.success) {
+            setEditMode(false);
+            setProfile({ ...profile, ...formData, profile_picture: data.profile_picture || profile.profile_picture });
+        } else {
+            setError(data.message);
         }
+    } catch (jsonError) {
+        console.error("Erreur JSON :", jsonError);
+        setError("Réponse serveur invalide : " + text);
+    }
+} catch (error) {
+    console.error("Erreur lors de la mise à jour :", error);
+    setError("Impossible de mettre à jour le profil.");
+}
+
     };
 
     if (error) {
@@ -122,10 +131,9 @@ export function Profile() {
 
     return (
         <StyledProfile>
-            <img src={profile.profile_picture || "/default-avatar.png"} className="profilePicture" alt="Profile" width="150" />
+            <img src={`http://localhost/musician-api/${profile.profile_picture}`} alt="Profile" className="profilePicture" />
             <h1>{profile.first_name || profile.username} {profile.last_name}</h1>
 
-            {/* Mode lecture */}
             {!editMode ? (
                 <>
                     <p><strong>Catégorie:</strong> {profile.category || "Non renseignée"}</p>
@@ -202,6 +210,8 @@ const StyledProfile = styled.div`
 
     .profilePicture {
         border-radius: 50%;
+        width: 150px;
+        height: 150px;
     }
     button {
         margin: 5px;

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Footer from "../component/footer";
 import styled from "styled-components";
 
-export function ConversationsList() {
+export function ConversationsList({user}) {
     const [conversations, setConversations] = useState([]);
 
     useEffect(() => {
@@ -41,7 +41,7 @@ export function ConversationsList() {
                 conversations.map(conv => (
                     <Link key={conv.id} to={`/chat/${conv.id}`}>
                         <div className="conversation-box">
-                            <img src={conv.profile_picture || "/default.jpg"} className="profilePicture" alt="Profile" width="50" />
+                            <img src={`http://localhost/musician-api/default.jpg`} className="profilePicture" alt="Profile" width="50" height="50" />
                             <p>{conv.username}</p>
                         </div>
                     </Link>
@@ -60,5 +60,14 @@ const StyledConv = styled.div`
 
     .profilePicture {
         border-radius: 50%;
+    }
+
+    .conversation-box {
+        display: flex;
+        gap: 10px;
+    }
+
+    p {
+        color: white;
     }
 `;
