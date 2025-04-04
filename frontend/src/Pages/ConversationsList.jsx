@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../component/footer";
 import styled from "styled-components";
 
@@ -31,6 +31,16 @@ export function ConversationsList({user}) {
             })
             .catch(err => console.error("Erreur:", err));
     }, []);
+
+    const navigate = useNavigate();
+
+    // Vérifier l'authentification uniquement une fois, pas dans les hooks
+    useEffect(() => {
+        const isAuthenticated = localStorage.getItem('authToken'); // Adjust this based on your auth logic
+        if (!isAuthenticated) {
+            navigate('/login');
+        }
+    }, [navigate]);
 
     return (
         <StyledConv>

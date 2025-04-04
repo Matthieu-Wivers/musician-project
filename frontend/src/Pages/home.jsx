@@ -3,10 +3,21 @@ import React, { useState, useEffect } from "react";
 import { UserBox } from "../component/UserBox";
 import Footer from '../component/footer';
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
     const [users, setUsers] = useState([]);
     const currentUserId = 1; // ID de l'utilisateur connecté, tu peux le récupérer de manière dynamique
+
+    const navigate = useNavigate();
+
+    // Vérifier l'authentification uniquement une fois, pas dans les hooks
+    useEffect(() => {
+        const isAuthenticated = localStorage.getItem('authToken'); // Adjust this based on your auth logic
+        if (!isAuthenticated) {
+            navigate('/login');
+        }
+    }, [navigate]);
 
     useEffect(() => {
         fetch("http://localhost/musician-api/get_users.php")
